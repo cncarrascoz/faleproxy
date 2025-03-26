@@ -25,8 +25,11 @@ app.post('/fetch', async (req, res) => {
       return res.status(400).json({ error: 'URL is required' });
     }
 
+    // Add http:// if no protocol is specified
+    const processedUrl = url.match(/^[a-zA-Z]+:\/\//) ? url : `http://${url}`;
+
     // Fetch the content from the provided URL
-    const response = await axios.get(url);
+    const response = await axios.get(processedUrl);
     const html = response.data;
 
     // Use cheerio to parse HTML and selectively replace text content, not URLs
