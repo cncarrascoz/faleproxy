@@ -38,9 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(data.error || 'Failed to fetch content');
             }
             
-            // Update the info bar
-            originalUrlElement.textContent = url;
-            originalUrlElement.href = url;
+            // Update the info bar and input field with the processed URL
+            const processedUrl = url.toLowerCase().startsWith('http://') || url.toLowerCase().startsWith('https://')
+                ? url
+                : `http://${url}`;
+            originalUrlElement.textContent = processedUrl;
+            originalUrlElement.href = processedUrl;
+            urlInput.value = processedUrl; // Update the input field with the processed URL
             pageTitleElement.textContent = data.title || 'No title';
             
             // Create a sandboxed iframe to display the content
