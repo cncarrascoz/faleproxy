@@ -26,7 +26,9 @@ app.post('/fetch', async (req, res) => {
     }
 
     // Add http:// if no protocol is specified
-    const processedUrl = url.match(/^[a-zA-Z]+:\/\//) ? url : `http://${url}`;
+    const processedUrl = url.toLowerCase().startsWith('http://') || url.toLowerCase().startsWith('https://') 
+      ? url 
+      : `http://${url}`;
 
     // Fetch the content from the provided URL
     const response = await axios.get(processedUrl);
